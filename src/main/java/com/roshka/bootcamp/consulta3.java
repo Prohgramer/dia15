@@ -27,19 +27,19 @@ public class consulta3 extends HttpServlet{
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
         try {
             Statement stmt = connection.createStatement();
-            res.setContentType("text/html");
+
             PrintWriter out = res.getWriter();
             ResultSet rs = stmt
-                    .executeQuery("SELECT count(p.ruc),p.nombre FROM proveedor p join producto pr on p.id=pr.proveedor_id GROUP BY p.nombre ORDER BY count DESC");
+                    .executeQuery("SELECT id,nombre FROM factura_tipo");
             out.println("<html>");
             out.println("<body>");
             out.println("<h1>TOP proveedor de productos</h1>");
             while (rs.next()) {
-                int cantidad = rs.getInt("count");
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
 
                 out.println("<p>NOMBRE = " + nombre + "</p>");
-                out.println("<p>CANTIDAD PRODUCTO  = " + cantidad + "</p>");
+                out.println("<p>ID factura:  = " + id + "</p>");
 
             }
             out.println("</body>");

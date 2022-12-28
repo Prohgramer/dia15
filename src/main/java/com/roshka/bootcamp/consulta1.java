@@ -27,23 +27,23 @@ public class consulta1 extends HttpServlet{
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
         try {
             Statement stmt = connection.createStatement();
-            res.setContentType("text/html");
+
             PrintWriter out = res.getWriter();
             ResultSet rs = stmt
-                    .executeQuery("SELECT count(f.id),c.nombre,c.apellido,c.nro_cedula FROM cliente c join factura f on c.id = f.cliente_id GROUP BY c.nombre,c.apellido,c.nro_cedula ORDER BY count DESC");
+                    .executeQuery("SELECT nombre,apellido,nro_cedula,telefono FROM cliente");
             out.println("<html>");
             out.println("<body>");
-            out.println("<h1>Cliente con mas factura</h1>");
+            out.println("<h1>Clientes</h1>");
             while (rs.next()) {
-                int cantidad = rs.getInt("count");
+
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String cedula = rs.getString("nro_cedula");
-
+                String telefono = rs.getString("telefono");
                 out.println("<p>NOMBRE = " + nombre + "</p>");
                 out.println("<p>APELLIDO = " + apellido + "</p>");
                 out.println("<p>NRO. Cedula = " + cedula + "</p>");
-                out.println("<p>CANTIDAD FACTURA = " + cantidad + "</p>");
+                out.println("<p>telefono = " + telefono + "</p>");
 
             }
             out.println("</body>");

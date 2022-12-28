@@ -27,19 +27,19 @@ public class consulta2 extends HttpServlet{
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
         try {
             Statement stmt = connection.createStatement();
-            res.setContentType("text/html");
+
             PrintWriter out = res.getWriter();
             ResultSet rs = stmt
-                    .executeQuery("SELECT count(m.nombre),m.nombre FROM moneda m join factura f on m.id = f.moneda_id GROUP BY m.nombre ORDER BY count DESC");
+                    .executeQuery("SELECT id,nombre FROM moneda");
             out.println("<html>");
             out.println("<body>");
             out.println("<h1>Moneda mas usada</h1>");
             while (rs.next()) {
-                int cantidad = rs.getInt("count");
                 String nombre = rs.getString("nombre");
-
+                int id=rs.getInt("id");
+                out.println("<p>ID: moneda = " + id + "</p>");
                 out.println("<p>NOMBRE = " + nombre + "</p>");
-                out.println("<p>CANTIDAD MONEDA UTILIZADA = " + cantidad + "</p>");
+
 
             }
             out.println("</body>");
